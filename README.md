@@ -1,112 +1,117 @@
-# Amirhossein Mahdinejad
-**Algorithm Engineering Student | Computer Programming Instructor**
+## 📞 Contact Information
 
-- **Email**: mahdinejad.amirhossein@gmail.com
+- **Email**: mahdinejad(dot)amirhossein(at)gmail(dot)com
 - **Location**: Tehran, Iran
 - **Date of Birth**: 29th of September 1997
 - **LinkedIn**: [amirhossein-mahdinejad](https://www.linkedin.com/in/amirhossein-mahdinejad/)
+- **GitHub**: [TheMn](https://github.com/TheMn)
 - **Skype**: live:mt.lroc
 
 ---
 
-## Work and Teaching Experiences
+## 💼 Work and Teaching Experiences
 
-### Instructor - Allamehelli5 High School (Tehran)  
-*Jan. 2023 - Present, Aug. 2018 - Present*  
-Taught high school students Python, C++, and the fundamentals of computer science including:
-- Basic concepts in combinatorics and probability
-- Introduction to algorithmic thinking and programming
+### Test Engineer - MyDigipay (Tehran)  
+*Feb 2023 - May 2023 (Full-time)*  
+As part of MyDigipay, a financial service within DigiKala, I am tasked with API testing and automation using Postman.
 
-### Teacher Assistant - University of Tehran (Tehran)  
-*Jul. 2022 - Apr. 2022*  
-- Assisted in mentoring students in Applied Machine Learning, focusing on Python packages such as Numpy, Pandas, Matplotlib, and Sklearn.
+- **Skills**: API testing, JavaScript, Data-driven testing, CI/CD, NoSQL databases
 
-### Teacher Assistant - University of Guilan (Rasht)  
-*Jul. 2022 - Sep. 2017*  
-Assisted in courses such as:
-- Formal Languages and Automata Theory
-- Artificial Intelligence and Expert Systems (Prolog)
-- Data Structures and Algorithms
-- Advanced Programming (Java)
-- Fundamentals of Programming (C++)
+### Recommender Systems Researcher & Teaching Assistant - University of Tehran (Tehran) 
+*Apr 2022 - Sep 2024 (Part-time)*  
+- **Recommender Systems Researcher**: Working on hybrid algorithms based on matrix factorization.  
+- **Teaching Assistant (Spring 2022)**: Assisted in Applied Machine Learning, mentoring students on Python packages like Numpy, Pandas, Matplotlib, and Scikit-learn.
 
-### Vice Chancellor for Research and Innovation - Allamehelli5 High School (Tehran)  
-*Jun. 2022 - Sep. 2019*  
-Managed research activities, organized seminars, and led skill development workshops for students.
+- **Skills**: Python, Evolutionary Algorithms, Recommender Systems, Linear Algebra
+
+### Django Developer & Computer Programming Teacher - Sampad (Tehran)  
+*Aug 2018 - Jan 2023 (Part-time)*  
+- **Django Developer (Oct 2019 - Sep 2022)**: Collaborated on the project [Allamehelli5](http://allamehelli5.ir).  
+- **Computer Programming Teacher (Aug 2018 - Jan 2023)**: Taught algorithmic thinking and programming (C++, Python).  
+- **Vice Chancellor for Research and Innovation (Sep 2019 - Jun 2022)**: Managed student research projects and organized monthly seminars with expert speakers.
+
+- **Skills**: C++, Python, JavaScript, SQL, Leadership, Teamwork
+
+### Python Developer - Rayka Software Consulting (Rasht)  
+*Aug 2019 - Sep 2020 (Part-time)*  
+Worked as a data annotator, later contributing to natural language processing projects.
+
+- **Skills**: Python, NLP, Data Annotation
+
+### Backend Developer - Fekr-Afarinan (Tehran)  
+*Nov 2016 - Mar 2018 (Part-time)*  
+Developed educational Android and web applications using Django and PHP.
+
+- **Skills**: Python (Django), PHP, JavaScript, Bootstrap
 
 ---
 
-## Competences
+## 💻 Competences
 
-- **C/C++**: Primary language for coding competitions and teaching.
-- **Python**: ML libraries (Numpy, Pandas, Scikit-learn), Django for web development.
-- **Modern JS**: Developed Google Apps Script applications.
-- **Git**: Familiar with version control systems and repository management.
-- **Linux**: Experienced with terminal commands in Kubuntu.
-- **LaTeX**: Used for CV creation and academic assignments.
+- **Python**: Used for ML algorithms and back-end web development with Django.  
+- **Modern JS**: Developed Google Apps Script applications for G Suite integration.  
+- **C/C++**: Preferred language for coding competitions and teaching.  
+- **Git**: Familiar with version control systems, maintaining multiple GitHub repositories.  
+- **Linux**: Proficient in terminal commands on Kubuntu, an Ubuntu-based distribution.  
+- **LaTeX**: Used for academic papers and this CV.
 
 ---
 
-## Projects
+## 🚀 Projects
 
-### [Allamehelli5 Website](http://allamehelli5.ir)
-*Oct. 2019 - Present*  
-Back-end developer and site manager for an educational website, added online tools such as Adobe Connect and Moodle during COVID-19.
+### [Allamehelli5 Website](https://github.com/TheMn/internet-engineering-project)  
+*Oct 2019 - Sep 2022*  
+Developed the back-end for a high school educational website. Added online tools (Adobe Connect, Moodle) during the COVID-19 pandemic.
 
-- **Technologies**: Python (Django), Bootstrap, SQLite
+- **Skills**: Python (Django), Bootstrap, SQLite
 
 ### [Feature Selection using Simulated Annealing](https://github.com/TheMn/Feature-Selection-using-Simulated-Annealing)  
-*Jan. 2022 - Feb. 2022*  
-Developed an optimization algorithm using simulated annealing to select features from a heart disease dataset.
+*Jan 2022 - Feb 2022*  
+Implemented simulated annealing to select features from a heart disease dataset and predicted outcomes using supervised learning algorithms.
 
-- **Technologies**: Python, Evolutionary Algorithms, Machine Learning
+- **Skills**: Python, Evolutionary Algorithms, Machine Learning
 
 ---
 
-## Education
-
-### University of Tehran  
-**M.Sc in Algorithms and Computations** (2021 - Present)  
-- Master’s Thesis: *Hybrid algorithms based on matrix factorization in recommender systems*
+## 🎓 Education
 
 ### University of Guilan  
-**B.Sc in Computer Engineering** (2016 - 2020)  
-- Bachelor’s Project: *Automatic extraction of metadata from scientific papers*
+**B.Sc in Computer Engineering** (Sep 2016 - Sep 2020)  
+- Bachelor's Project: *Automatic extraction of metadata from scientific papers*
 
 ### Allamehelli5 High School  
-**Diploma in Physics and Mathematics Discipline** (2012 - 2016)  
+**Diploma in Physics and Mathematics Discipline** (Sep 2012 - Jun 2016)
 
 ---
 
-## Languages
+## 🏆 Achievements
 
-- **English**: Intermediate (4/5)
-- **Persian**: Native (5/5)
-- **French**: Elementary (2/5)
+- **8th Place** - 2019 ICPC Asia Tehran Regional Contest (Team: Estefaadeye Abzaari)  
+  Resulted in the University of Guilan increasing its competition team quota from one to three.
 
----
-
-## Achievements
-
-### 8th Place - 2019 ICPC Asia Tehran Regional Contest  
-(Team: Estefaadeye Abzaari)  
-Contributed to the University of Guilan increasing its competition quota from one team to three teams.
+- **Winner** - 4th Sharif Spaghetti Contest (Team: Vazin-Tamiz-Manzel)
 
 ---
 
-## Volunteering Experiences
+## 🌍 Languages
 
-- **Executive Director**, 2019 University of Guilan Programming Contest
-- **Host and Orator**, 2019 University of Guilan Engineering Graduation Ceremony
+- **Persian**: Native
+- **English**: IELTS overall score 6.5
+- **Italian**: Elementary proficiency
 
 ---
 
-## References
+## 🎤 Volunteering Experiences
+
+- **Executive Director** - 2019 University of Guilan Programming Contest  
+- **Host and Orator** - 2019 University of Guilan Engineering Graduation Ceremony
+
+---
+
+## 📝 References
 
 - **Dr. Rooholah Abedian**  
 Assistant Professor, University of Tehran  
-rrabedian@gmail.com
 
 - **Dr. Abolghasem Mirroshandel**  
 Associate Professor, University of Guilan  
-mirroshandel@gmail.com
