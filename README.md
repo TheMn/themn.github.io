@@ -1,3 +1,5 @@
+<h1 style="display:none">TheMn – Cloud Backend Engineer</h1>
+
 ## 📞 Contact Information
 
 - **Email**: mahdinejad(dot)amirhossein(at)gmail(dot)com
@@ -5,7 +7,6 @@
 - **Date of Birth**: 29th of September 1997
 - **LinkedIn**: [amirhossein-mahdinejad](https://www.linkedin.com/in/amirhossein-mahdinejad/)
 - **GitHub**: [TheMn](https://github.com/TheMn)
-- **Skype**: live:mt.lroc
 
 ---
 
