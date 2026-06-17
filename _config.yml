@@ -4,3 +4,19 @@ description: Cloud Backend Engineer
 show_downloads: false
 google_analytics:
 theme: jekyll-theme-minimal
+
+# Posts collection
+collections:
+  posts:
+    output: true
+    permalink: /blog/:year/:month/:day/:title/
+
+# Placeholders — replaced by GitHub Actions using repository secrets (never commit real values)
+unsplash_access_key: "UNSPLASH_KEY_PLACEHOLDER"
+contact_script_url: "CONTACT_URL_PLACEHOLDER"
+
+# Non-secret config — fill these in and commit
+unsplash_username: ""        # your Unsplash username, e.g. "amirhossein"
+giscus_repo_id: ""           # from https://giscus.app
+giscus_category: "Blog Comments"
+giscus_category_id: ""       # from https://giscus.app
