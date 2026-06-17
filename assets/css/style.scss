@@ -1,0 +1,394 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+/* =========================================================
+   STICKY NAV BAR
+   ========================================================= */
+
+#topnav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: #fff;
+  border-bottom: 1px solid #e1e4e8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  height: 52px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.nav-brand {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #267CB9;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.nav-brand:hover { color: #1a5a8a; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  display: block;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.9rem;
+  color: #444;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-links a:hover,
+.nav-links a.active {
+  background: #f0f4f8;
+  color: #267CB9;
+}
+
+.btn-cv {
+  display: inline-block;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff !important;
+  background: #267CB9;
+  border-radius: 4px;
+  text-decoration: none !important;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.btn-cv:hover { background: #1a5a8a; }
+
+/* Hamburger (pure CSS) */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  background: none;
+  border: none;
+}
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #444;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+#nav-checkbox { display: none; }
+
+@media (max-width: 760px) {
+  .nav-toggle { display: flex; }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    position: absolute;
+    top: 52px;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-bottom: 1px solid #e1e4e8;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  }
+
+  #nav-checkbox:checked ~ .nav-links { display: flex; }
+
+  .nav-toggle-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+}
+
+/* Shift the theme's fixed-width wrapper down so it isn't hidden behind the nav */
+.wrapper {
+  margin-top: 0;
+}
+
+/* =========================================================
+   SHARED PAGE LAYOUT (gallery, contact, blog)
+   ========================================================= */
+
+.page-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e1e4e8;
+}
+
+/* =========================================================
+   GALLERY
+   ========================================================= */
+
+.gallery-section-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #555;
+  margin: 2rem 0 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.gallery-card {
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #e1e4e8;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  background: #fafafa;
+}
+.gallery-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.gallery-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-card-info {
+  padding: 0.6rem 0.8rem 0.8rem;
+}
+.gallery-card-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #333;
+  margin: 0 0 0.2rem;
+}
+.gallery-card-date {
+  font-size: 0.78rem;
+  color: #888;
+  margin: 0 0 0.3rem;
+}
+.gallery-card-caption {
+  font-size: 0.82rem;
+  color: #555;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.gallery-unsplash-link {
+  font-size: 0.8rem;
+  color: #267CB9;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 0.25rem;
+}
+.gallery-unsplash-link:hover { text-decoration: underline; }
+
+.gallery-loading,
+.gallery-error {
+  color: #888;
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+/* =========================================================
+   CONTACT FORM
+   ========================================================= */
+
+.contact-form {
+  max-width: 560px;
+}
+
+.form-group {
+  margin-bottom: 1.1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 0.3rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.92rem;
+  border: 1px solid #cdd1d5;
+  border-radius: 4px;
+  background: #fff;
+  color: #333;
+  box-sizing: border-box;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  font-family: inherit;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #267CB9;
+  box-shadow: 0 0 0 2px rgba(38,124,185,0.15);
+}
+.form-group input.invalid,
+.form-group textarea.invalid {
+  border-color: #d73a49;
+}
+
+.form-error {
+  display: none;
+  font-size: 0.8rem;
+  color: #d73a49;
+  margin-top: 0.25rem;
+}
+.form-error.visible { display: block; }
+
+.form-group textarea { resize: vertical; min-height: 120px; }
+
+.btn-submit {
+  display: inline-block;
+  padding: 0.55rem 1.4rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #fff;
+  background: #267CB9;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-submit:hover { background: #1a5a8a; }
+.btn-submit:disabled { background: #aaa; cursor: not-allowed; }
+
+.form-status {
+  display: none;
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+.form-status.success {
+  display: block;
+  background: #e6f4ea;
+  color: #1e7e34;
+  border: 1px solid #a8d5b5;
+}
+.form-status.error {
+  display: block;
+  background: #fdecea;
+  color: #b31d28;
+  border: 1px solid #f5c6cb;
+}
+
+/* =========================================================
+   BLOG
+   ========================================================= */
+
+.post-list { list-style: none; padding: 0; margin: 0; }
+
+.post-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid #e1e4e8;
+}
+.post-item:last-child { border-bottom: none; }
+
+.post-item-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+}
+.post-item-title a {
+  color: #267CB9;
+  text-decoration: none;
+}
+.post-item-title a:hover { text-decoration: underline; }
+
+.post-item-meta {
+  font-size: 0.82rem;
+  color: #888;
+  margin: 0 0 0.4rem;
+}
+
+.post-item-excerpt {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
+}
+
+/* Write new post panel */
+.new-post-toggle {
+  margin-bottom: 1.5rem;
+}
+
+.btn-new-post {
+  display: inline-block;
+  padding: 0.45rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #267CB9;
+  background: transparent;
+  border: 1px solid #267CB9;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-new-post:hover {
+  background: #267CB9;
+  color: #fff;
+}
+
+.new-post-panel {
+  display: none;
+  background: #f6f8fa;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 1.25rem;
+  margin-top: 1rem;
+}
+.new-post-panel.open { display: block; }
+.new-post-panel .form-group label { color: #555; }
+
+.btn-open-github {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  background: #24292e;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-open-github:hover { background: #444d56; }
+
+/* Blog post body */
+.post-header { margin-bottom: 1.5rem; }
+.post-header h1 { margin-bottom: 0.25rem; }
+.post-date { font-size: 0.85rem; color: #888; }
+.post-body { line-height: 1.75; }
+
+.giscus-wrapper {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e1e4e8;
+}
