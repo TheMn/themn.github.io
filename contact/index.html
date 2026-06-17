@@ -1,0 +1,128 @@
+---
+layout: page
+title: Contact Me
+permalink: /contact/
+---
+
+<div class="contact-form">
+  <p style="font-size:0.92rem;color:#555;margin-bottom:1.5rem;">
+    Fill in the form below and I'll get back to you at the email you provide.
+  </p>
+
+  <form id="contact-form" novalidate
+        data-endpoint="{{ site.contact_script_url }}">
+
+    <div class="form-group">
+      <label for="cf-name">Full Name <span style="color:#d73a49">*</span></label>
+      <input type="text" id="cf-name" name="name" placeholder="Jane Smith" required>
+      <span class="form-error" id="err-name">Please enter your name.</span>
+    </div>
+
+    <div class="form-group">
+      <label for="cf-email">Your Email <span style="color:#d73a49">*</span></label>
+      <input type="email" id="cf-email" name="email" placeholder="jane@example.com" required>
+      <span class="form-error" id="err-email">Please enter a valid email address.</span>
+    </div>
+
+    <div class="form-group">
+      <label for="cf-subject">Subject <span style="color:#d73a49">*</span></label>
+      <input type="text" id="cf-subject" name="subject" placeholder="What's this about?" required>
+      <span class="form-error" id="err-subject">Please enter a subject.</span>
+    </div>
+
+    <div class="form-group">
+      <label for="cf-message">Message <span style="color:#d73a49">*</span></label>
+      <textarea id="cf-message" name="message" placeholder="Your message…" required></textarea>
+      <span class="form-error" id="err-message">Please enter a message.</span>
+    </div>
+
+    <button type="submit" class="btn-submit" id="cf-submit">Send Message</button>
+  </form>
+
+  <div class="form-status" id="form-status"></div>
+</div>
+
+<script>
+(function () {
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  var form    = document.getElementById('contact-form');
+  var btn     = document.getElementById('cf-submit');
+  var status  = document.getElementById('form-status');
+
+  function field(id)  { return document.getElementById(id); }
+  function err(id)    { return document.getElementById('err-' + id); }
+
+  function setInvalid(id, show) {
+    field('cf-' + id).classList.toggle('invalid', show);
+    err(id).classList.toggle('visible', show);
+  }
+
+  function validate() {
+    var name    = field('cf-name').value.trim();
+    var email   = field('cf-email').value.trim();
+    var subject = field('cf-subject').value.trim();
+    var message = field('cf-message').value.trim();
+
+    var ok = true;
+    setInvalid('name',    !name);    if (!name)    ok = false;
+    setInvalid('subject', !subject); if (!subject) ok = false;
+    setInvalid('message', !message); if (!message) ok = false;
+
+    var badEmail = !email || !EMAIL_RE.test(email);
+    setInvalid('email', badEmail);
+    if (badEmail) ok = false;
+
+    return ok ? { name: name, email: email, subject: subject, message: message } : null;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    status.className = 'form-status';
+    status.textContent = '';
+
+    var data = validate();
+    if (!data) return;
+
+    var endpoint = form.dataset.endpoint;
+    if (!endpoint || endpoint === 'CONTACT_URL_PLACEHOLDER') {
+      status.className = 'form-status error';
+      status.textContent = 'Contact form is not configured yet.';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    fetch(endpoint, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (res) {
+        if (res.status === 'ok') {
+          form.reset();
+          status.className = 'form-status success';
+          status.textContent = 'Message sent! I\'ll reply to ' + data.email + ' soon.';
+        } else {
+          throw new Error('Unexpected response');
+        }
+      })
+      .catch(function () {
+        status.className = 'form-status error';
+        status.textContent = 'Something went wrong. Please try again or email me directly.';
+      })
+      .finally(function () {
+        btn.disabled = false;
+        btn.textContent = 'Send Message';
+      });
+  });
+
+  /* Clear validation state on input */
+  ['name', 'email', 'subject', 'message'].forEach(function (id) {
+    field('cf-' + id).addEventListener('input', function () {
+      setInvalid(id, false);
+    });
+  });
+})();
+</script>

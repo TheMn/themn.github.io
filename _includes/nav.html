@@ -1,0 +1,19 @@
+<nav id="topnav">
+  <a class="nav-brand" href="/">{{ site.title }}</a>
+
+  <input type="checkbox" id="nav-checkbox">
+  <div class="nav-toggle-wrapper">
+    <label class="nav-toggle" for="nav-checkbox" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+    <ul class="nav-links">
+      <li><a href="/"{% if page.url == "/" %} class="active"{% endif %}>Home</a></li>
+      <li><a href="/gallery/"{% if page.url contains "/gallery" %} class="active"{% endif %}>Gallery</a></li>
+      <li><a href="/blog/"{% if page.url contains "/blog" %} class="active"{% endif %}>Blog</a></li>
+      <li><a href="/contact/"{% if page.url contains "/contact" %} class="active"{% endif %}>Contact</a></li>
+      <li><a href="/Amirhossein_Mahdinejad.pdf" download class="btn-cv">Download CV</a></li>
+    </ul>
+  </div>
+</nav>

@@ -4,3 +4,19 @@ description: Cloud Backend Engineer
 show_downloads: false
 google_analytics:
 theme: jekyll-theme-minimal
+
+# Posts collection
+collections:
+  posts:
+    output: true
+    permalink: /blog/:year/:month/:day/:title/
+
+# Placeholders — replaced by GitHub Actions using repository secrets
+unsplash_access_key: "UNSPLASH_ACCESS_KEY"
+contact_script_url: "CONTACT_SCRIPT_URL"
+
+# Non-secret config
+unsplash_username: "themn"
+giscus_repo_id: "MDEwOlJlcG9zaXRvcnkyMTQ2MzMyMTA="
+giscus_category: "Blog Comments"
+giscus_category_id: "DIC_kwDODMsK-s4C_U-C"

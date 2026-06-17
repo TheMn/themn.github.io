@@ -1,0 +1,9 @@
+# Add your gallery photos here.
+# Drop image files into assets/images/gallery/ and reference them below.
+#
+# Example entry:
+# - title: "Conference Talk"
+#   date: "2024-11"
+#   caption: "Presenting at PyCon Iran 2024"
+#   image: /assets/images/gallery/pycon-2024.jpg
+#   tags: [speaking, python]

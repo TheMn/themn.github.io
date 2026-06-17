@@ -1,0 +1,108 @@
+---
+layout: page
+title: Gallery
+permalink: /gallery/
+---
+
+<!-- ── Local photos ─────────────────────────────────────────── -->
+{% if site.data.gallery.size > 0 %}
+<p class="gallery-section-title">Photos</p>
+<div class="gallery-grid" id="local-gallery">
+  {% for item in site.data.gallery %}
+  <div class="gallery-card"
+       data-src="{{ item.image }}"
+       data-sub-html="<h4>{{ item.title }}</h4><p>{{ item.caption }}</p>">
+    <img src="{{ item.image }}" alt="{{ item.title }}" loading="lazy">
+    <div class="gallery-card-info">
+      <p class="gallery-card-title">{{ item.title }}</p>
+      {% if item.date %}<p class="gallery-card-date">{{ item.date }}</p>{% endif %}
+      {% if item.caption %}<p class="gallery-card-caption">{{ item.caption }}</p>{% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p style="color:#888;font-size:0.9rem;">No photos yet — add entries to <code>_data/gallery.yml</code> and drop images into <code>assets/images/gallery/</code>.</p>
+{% endif %}
+
+<!-- ── Unsplash photos ──────────────────────────────────────── -->
+<p class="gallery-section-title">My Unsplash Work</p>
+<div
+  id="unsplash-gallery"
+  class="gallery-grid"
+  data-username="{{ site.unsplash_username }}"
+  data-key="{{ site.unsplash_access_key }}">
+  <p class="gallery-loading" id="unsplash-status">Loading photos…</p>
+</div>
+
+<!-- lightGallery for local images -->
+<script>
+(function () {
+  const el = document.getElementById('local-gallery');
+  if (!el || !el.children.length) return;
+  lightGallery(el, {
+    selector: '.gallery-card',
+    dynamic: false,
+    download: false,
+  });
+})();
+</script>
+
+<!-- Unsplash fetch -->
+<script>
+(function () {
+  const container = document.getElementById('unsplash-gallery');
+  const status    = document.getElementById('unsplash-status');
+  const username  = container.dataset.username;
+  const key       = container.dataset.key;
+
+  if (!username || username === 'UNSPLASH_KEY_PLACEHOLDER' || !key || key === 'UNSPLASH_KEY_PLACEHOLDER') {
+    status.textContent = 'Unsplash not configured — set unsplash_username and UNSPLASH_ACCESS_KEY secret.';
+    return;
+  }
+
+  fetch('https://api.unsplash.com/users/' + username + '/photos?per_page=12&client_id=' + key)
+    .then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      return r.json();
+    })
+    .then(function (photos) {
+      status.remove();
+      if (!photos.length) {
+        container.innerHTML = '<p class="gallery-loading">No public photos found on Unsplash.</p>';
+        return;
+      }
+
+      var lgItems = [];
+      photos.forEach(function (photo) {
+        var card = document.createElement('div');
+        card.className = 'gallery-card';
+
+        var date = new Date(photo.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+        var desc = photo.description || photo.alt_description || '';
+
+        card.innerHTML =
+          '<img src="' + photo.urls.small + '" alt="' + desc.replace(/"/g, '&quot;') + '" loading="lazy">' +
+          '<div class="gallery-card-info">' +
+          '<p class="gallery-card-date">' + date + '</p>' +
+          (desc ? '<p class="gallery-card-caption">' + desc + '</p>' : '') +
+          '<a class="gallery-unsplash-link" href="' + photo.links.html + '" target="_blank" rel="noopener">View on Unsplash ↗</a>' +
+          '</div>';
+
+        container.appendChild(card);
+        lgItems.push({ src: photo.urls.regular, subHtml: '<p>' + desc + '</p>' });
+      });
+
+      lightGallery(container, {
+        selector: '.gallery-card',
+        dynamic: true,
+        dynamicEl: lgItems,
+        download: false,
+      });
+    })
+    .catch(function (err) {
+      status.className = 'gallery-error';
+      status.textContent = 'Could not load Unsplash photos (' + err.message + ').';
+    });
+})();
+</script>
