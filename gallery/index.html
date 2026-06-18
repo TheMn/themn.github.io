@@ -26,13 +26,15 @@ permalink: /gallery/
 {% endif %}
 
 <!-- ── Unsplash photos ──────────────────────────────────────── -->
-<p class="gallery-section-title">My Unsplash Work</p>
-<div
-  id="unsplash-gallery"
-  class="gallery-grid"
-  data-username="{{ site.unsplash_username }}"
-  data-key="{{ site.unsplash_access_key }}">
-  <p class="gallery-loading" id="unsplash-status">Loading photos…</p>
+<div id="unsplash-section">
+  <p class="gallery-section-title">My Unsplash Work</p>
+  <div
+    id="unsplash-gallery"
+    class="gallery-grid"
+    data-username="{{ site.unsplash_username }}"
+    data-key="{{ site.unsplash_access_key }}">
+    <p class="gallery-loading" id="unsplash-status">Loading photos…</p>
+  </div>
 </div>
 
 <!-- lightGallery for local images -->
@@ -57,7 +59,7 @@ permalink: /gallery/
   const key       = container.dataset.key;
 
   if (!username || !key || key === 'UNSPLASH_ACCESS_KEY') {
-    status.textContent = 'Unsplash not configured — add the UNSPLASH_ACCESS_KEY secret in GitHub repository settings.';
+    document.getElementById('unsplash-section').style.display = 'none';
     return;
   }
 

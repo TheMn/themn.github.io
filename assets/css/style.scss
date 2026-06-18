@@ -127,7 +127,7 @@ body {
 }
 
 /* Hide the sidebar site-title h1 — nav-brand already shows it */
-header h1 {
+.wrapper > header h1 {
   display: none;
 }
 
@@ -414,9 +414,18 @@ header h1 {
 .btn-open-github:hover { background: #444d56; }
 
 /* Blog post body */
-.post-header { margin-bottom: 1.5rem; }
-.post-header h1 { margin-bottom: 0.25rem; }
-.post-date { font-size: 0.85rem; color: #888; }
+.post-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e1e4e8;
+}
+.post-header h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 0.3rem;
+}
+.post-date { font-size: 0.85rem; color: #888; margin: 0; }
 .post-body { line-height: 1.75; }
 
 .giscus-wrapper {

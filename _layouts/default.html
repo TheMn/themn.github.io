@@ -16,11 +16,12 @@
     {% include nav.html %}
     <div class="wrapper">
       <header>
-        {% if site.logo %}
-          <img src="{{site.logo | relative_url}}" alt="Logo" />
+        {% assign sidebar_img = page.sidebar_image | default: site.logo %}
+        {% if sidebar_img %}
+          <img src="{{ sidebar_img | relative_url }}" alt="{{ page.title | default: site.title }}" />
         {% endif %}
 
-        <p>{{ site.description | default: site.github.project_tagline }}</p>
+        <p>{{ page.sidebar_description | default: site.description | default: site.github.project_tagline }}</p>
       </header>
       <section>
 
