@@ -93,7 +93,7 @@ permalink: /contact/
     if (!data) return;
 
     var endpoint = form.dataset.endpoint;
-    if (!endpoint || endpoint === 'CONTACT_URL_PLACEHOLDER') {
+    if (!endpoint || endpoint === 'CONTACT_SCRIPT_URL') {
       status.className = 'form-status error';
       status.textContent = 'Contact form is not configured yet.';
       return;

@@ -56,8 +56,8 @@ permalink: /gallery/
   const username  = container.dataset.username;
   const key       = container.dataset.key;
 
-  if (!username || username === 'UNSPLASH_KEY_PLACEHOLDER' || !key || key === 'UNSPLASH_KEY_PLACEHOLDER') {
-    status.textContent = 'Unsplash not configured — set unsplash_username and UNSPLASH_ACCESS_KEY secret.';
+  if (!username || !key || key === 'UNSPLASH_ACCESS_KEY') {
+    status.textContent = 'Unsplash not configured — add the UNSPLASH_ACCESS_KEY secret in GitHub repository settings.';
     return;
   }
 
