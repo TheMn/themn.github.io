@@ -1,3 +1,9 @@
+- title: "First test title!"
+  date: "2026-06-18"
+  image: /assets/images/gallery/2026-06-18-first-test-title.jpg
+  caption: "And the caption goes here."
+  tags: [Experience, Weather]
+
 # Add your gallery photos here.
 # Drop image files into assets/images/gallery/ and reference them below.
 #
