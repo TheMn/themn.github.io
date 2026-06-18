@@ -64,7 +64,7 @@ permalink: /gallery/
     <div class="gallery-card-info">
       <p class="gallery-card-title">{{ item.title }}</p>
       {% if item.date %}<p class="gallery-card-date">{{ item.date }}</p>{% endif %}
-      {% if item.caption %}<p class="gallery-card-caption">{{ item.caption }}</p>{% endif %}
+      {% if item.caption %}<p class="gallery-card-caption">{{ item.caption | truncate: 33 }}</p>{% endif %}
     </div>
   </div>
   {% endfor %}
@@ -315,14 +315,15 @@ permalink: /gallery/
         var card = document.createElement('div');
         card.className = 'gallery-card';
 
-        var date = new Date(photo.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
-        var desc = photo.description || photo.alt_description || '';
+        var date      = new Date(photo.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+        var desc      = photo.description || photo.alt_description || '';
+        var shortDesc = desc.length > 30 ? desc.slice(0, 30) + '…' : desc;
 
         card.innerHTML =
           '<img src="' + photo.urls.small + '" alt="' + desc.replace(/"/g, '&quot;') + '" loading="lazy">' +
           '<div class="gallery-card-info">' +
           '<p class="gallery-card-date">' + date + '</p>' +
-          (desc ? '<p class="gallery-card-caption">' + desc + '</p>' : '') +
+          (shortDesc ? '<p class="gallery-card-caption">' + shortDesc + '</p>' : '') +
           '<a class="gallery-unsplash-link" href="' + photo.links.html + '" target="_blank" rel="noopener">View on Unsplash ↗</a>' +
           '</div>';
 
