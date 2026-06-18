@@ -4,6 +4,54 @@ title: Gallery
 permalink: /gallery/
 ---
 
+<!-- ── Owner: add photo ──────────────────────────────────────── -->
+<div class="blog-header">
+  <button class="btn-new-post" id="toggle-add-photo" title="Owner panel">+</button>
+</div>
+
+<div class="new-post-panel" id="add-photo-panel">
+  <!-- GitHub token (stored only in browser localStorage) -->
+  <div style="margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid #e1e4e8;">
+    <label for="gp-token" style="font-size:0.85rem;font-weight:600;">
+      GitHub Token
+      <span style="font-weight:normal;color:#888;"> — stored in this browser only, never committed</span>
+    </label>
+    <div style="display:flex;gap:0.5rem;margin-top:0.35rem;">
+      <input type="password" id="gp-token" placeholder="ghp_…"
+             style="flex:1;font-family:monospace;font-size:0.85rem;padding:0.35rem 0.6rem;border:1px solid #d1d5da;border-radius:4px;">
+      <button class="btn-open-github" id="gp-save-token" style="white-space:nowrap;padding:0.35rem 0.8rem;">Save</button>
+      <button class="btn-open-github" id="gp-clear-token" style="white-space:nowrap;padding:0.35rem 0.8rem;background:#fff;color:#d73a49;border-color:#d73a49;">Clear</button>
+    </div>
+    <span id="gp-token-status" style="font-size:0.8rem;display:block;margin-top:0.3rem;"></span>
+  </div>
+
+  <!-- Photo fields -->
+  <div class="form-group">
+    <label for="gp-title">Title <span style="color:#d73a49">*</span></label>
+    <input type="text" id="gp-title" placeholder="Conference Talk">
+  </div>
+  <div class="form-group">
+    <label for="gp-date">Date <span style="color:#d73a49">*</span></label>
+    <input type="date" id="gp-date">
+  </div>
+  <div class="form-group">
+    <label for="gp-caption">Caption / Description</label>
+    <textarea id="gp-caption" style="min-height:80px;font-family:inherit;" placeholder="A short description of the photo…"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="gp-tags">Tags <span style="font-weight:normal;color:#888;">(comma-separated)</span></label>
+    <input type="text" id="gp-tags" placeholder="travel, architecture">
+  </div>
+  <div class="form-group">
+    <label for="gp-image">Image File <span style="color:#d73a49">*</span></label>
+    <input type="file" id="gp-image" accept="image/*" style="font-size:0.88rem;">
+    <span id="gp-filename-hint" style="font-size:0.8rem;color:#888;display:block;margin-top:0.3rem;"></span>
+  </div>
+
+  <button class="btn-open-github" id="gp-publish" style="margin-top:0.5rem;">Publish Photo</button>
+  <div id="gp-publish-status" style="font-size:0.88rem;margin-top:0.6rem;"></div>
+</div>
+
 <!-- ── Local photos ─────────────────────────────────────────── -->
 {% if site.data.gallery.size > 0 %}
 <p class="gallery-section-title">Photos</p>
@@ -22,7 +70,7 @@ permalink: /gallery/
   {% endfor %}
 </div>
 {% else %}
-<p style="color:#888;font-size:0.9rem;">No photos yet — add entries to <code>_data/gallery.yml</code> and drop images into <code>assets/images/gallery/</code>.</p>
+<p style="color:#888;font-size:0.9rem;">No photos yet.</p>
 {% endif %}
 
 <!-- ── Unsplash photos ──────────────────────────────────────── -->
@@ -36,6 +84,193 @@ permalink: /gallery/
     <p class="gallery-loading" id="unsplash-status">Loading photos…</p>
   </div>
 </div>
+
+<!-- Owner panel -->
+<script>
+(function () {
+  var REPO   = 'themn/themn.github.io';
+  var BRANCH = 'master';
+  var API    = 'https://api.github.com/repos/' + REPO + '/contents/';
+
+  /* ── panel toggle ── */
+  var btn   = document.getElementById('toggle-add-photo');
+  var panel = document.getElementById('add-photo-panel');
+  btn.addEventListener('click', function () {
+    panel.classList.toggle('open');
+    btn.textContent = panel.classList.contains('open') ? '×' : '+';
+  });
+
+  /* ── pre-fill today ── */
+  document.getElementById('gp-date').value = new Date().toISOString().slice(0, 10);
+
+  /* ── token management ── */
+  var tokenInput  = document.getElementById('gp-token');
+  var tokenStatus = document.getElementById('gp-token-status');
+
+  function showTokenStatus(msg, ok) {
+    tokenStatus.textContent = msg;
+    tokenStatus.style.color = ok ? '#2ea043' : '#d73a49';
+  }
+
+  (function loadToken() {
+    var saved = localStorage.getItem('gh_pat');
+    if (saved) { tokenInput.value = saved; showTokenStatus('Token saved ✓', true); }
+  })();
+
+  document.getElementById('gp-save-token').addEventListener('click', function () {
+    var t = tokenInput.value.trim();
+    if (!t) { showTokenStatus('Enter a token first.', false); return; }
+    localStorage.setItem('gh_pat', t);
+    showTokenStatus('Token saved ✓', true);
+  });
+
+  document.getElementById('gp-clear-token').addEventListener('click', function () {
+    localStorage.removeItem('gh_pat');
+    tokenInput.value = '';
+    showTokenStatus('Token cleared.', false);
+  });
+
+  /* ── filename hint ── */
+  function fileExt(name) {
+    var p = name.lastIndexOf('.');
+    return p !== -1 ? name.slice(p + 1).toLowerCase() : 'jpg';
+  }
+
+  function buildSlug() {
+    var title = document.getElementById('gp-title').value.trim();
+    var date  = document.getElementById('gp-date').value;
+    return date + '-' + title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  }
+
+  function updateHint() {
+    var title = document.getElementById('gp-title').value.trim();
+    var date  = document.getElementById('gp-date').value;
+    var file  = document.getElementById('gp-image').files[0];
+    if (!title || !date) return;
+    var ext  = file ? fileExt(file.name) : 'jpg';
+    document.getElementById('gp-filename-hint').textContent =
+      'Will commit as: assets/images/gallery/' + buildSlug() + '.' + ext;
+  }
+
+  ['gp-title', 'gp-date'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', updateHint);
+  });
+  document.getElementById('gp-image').addEventListener('change', updateHint);
+
+  /* ── helpers ── */
+  function toBase64(str) {
+    return btoa(unescape(encodeURIComponent(str)));
+  }
+
+  function ghHeaders(token) {
+    return {
+      'Authorization': 'token ' + token,
+      'Content-Type':  'application/json',
+      'Accept':        'application/vnd.github.v3+json'
+    };
+  }
+
+  /* ── publish ── */
+  var publishBtn  = document.getElementById('gp-publish');
+  var statusEl    = document.getElementById('gp-publish-status');
+
+  function setStatus(msg, color) {
+    statusEl.textContent = msg;
+    statusEl.style.color = color || '#555';
+  }
+
+  publishBtn.addEventListener('click', function () {
+    var token   = (localStorage.getItem('gh_pat') || '').trim();
+    var title   = document.getElementById('gp-title').value.trim();
+    var date    = document.getElementById('gp-date').value;
+    var caption = document.getElementById('gp-caption').value.trim();
+    var tagsRaw = document.getElementById('gp-tags').value.trim();
+    var file    = document.getElementById('gp-image').files[0];
+
+    if (!token)  { setStatus('Save a GitHub token first.', '#d73a49'); return; }
+    if (!title)  { setStatus('Title is required.', '#d73a49'); return; }
+    if (!date)   { setStatus('Date is required.', '#d73a49'); return; }
+    if (!file)   { setStatus('Select an image file.', '#d73a49'); return; }
+
+    var tags    = tagsRaw ? tagsRaw.split(',').map(function (t) { return t.trim(); }).filter(Boolean) : [];
+    var ext     = fileExt(file.name);
+    var slug    = buildSlug();
+    var imgPath = 'assets/images/gallery/' + slug + '.' + ext;
+    var hdrs    = ghHeaders(token);
+
+    publishBtn.disabled = true;
+    setStatus('Reading image…');
+
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      var imgBase64 = e.target.result.split(',')[1];
+
+      setStatus('Uploading image…');
+
+      /* Step 1 — check if image already exists (need sha to overwrite) */
+      fetch(API + imgPath + '?ref=' + BRANCH, { headers: hdrs })
+        .then(function (r) { return r.status === 404 ? null : r.json(); })
+        .then(function (existing) {
+          var body = { message: 'Add gallery photo: ' + title, content: imgBase64, branch: BRANCH };
+          if (existing && existing.sha) body.sha = existing.sha;
+          return fetch(API + imgPath, { method: 'PUT', headers: hdrs, body: JSON.stringify(body) });
+        })
+        .then(function (r) {
+          if (!r.ok) return r.json().then(function (e) { throw new Error(e.message || r.status); });
+          setStatus('Image uploaded. Updating gallery data…');
+
+          /* Step 2 — read current gallery.yml */
+          return fetch(API + '_data/gallery.yml?ref=' + BRANCH, { headers: hdrs });
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          var current = data.content
+            ? decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))))
+            : '';
+
+          var entry = '- title: "' + title.replace(/"/g, '\\"') + '"\n'
+                    + '  date: "' + date + '"\n'
+                    + '  image: /' + imgPath + '\n';
+          if (caption) entry += '  caption: "' + caption.replace(/"/g, '\\"') + '"\n';
+          if (tags.length) entry += '  tags: [' + tags.join(', ') + ']\n';
+
+          /* Prepend newest entry */
+          var updated = entry + '\n' + current.trimStart();
+
+          /* Step 3 — commit updated gallery.yml */
+          return fetch(API + '_data/gallery.yml', {
+            method: 'PUT',
+            headers: hdrs,
+            body: JSON.stringify({
+              message: 'Add gallery entry: ' + title,
+              content: toBase64(updated),
+              sha:     data.sha,
+              branch:  BRANCH
+            })
+          });
+        })
+        .then(function (r) {
+          if (!r.ok) return r.json().then(function (e) { throw new Error(e.message || r.status); });
+          setStatus('Published! Site will update after GitHub rebuilds (~1 min).', '#2ea043');
+          /* reset form */
+          ['gp-title', 'gp-caption', 'gp-tags'].forEach(function (id) {
+            document.getElementById(id).value = '';
+          });
+          document.getElementById('gp-image').value = '';
+          document.getElementById('gp-filename-hint').textContent = '';
+          document.getElementById('gp-date').value = new Date().toISOString().slice(0, 10);
+        })
+        .catch(function (err) {
+          setStatus('Error: ' + err.message, '#d73a49');
+        })
+        .finally(function () {
+          publishBtn.disabled = false;
+        });
+    };
+    reader.readAsDataURL(file);
+  });
+})();
+</script>
 
 <!-- lightGallery for local images -->
 <script>
